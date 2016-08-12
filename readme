@@ -1,0 +1,3 @@
+monitor_sns_elk.sh: monitor.sh plus sns notification and push notes to file that logstash monitor
+traffic_monitor.sh: put statistics of tunnel interface to cloudwatch using custom metric
+vpn_monitor.sh: initialize tunnel interface and ip rule
