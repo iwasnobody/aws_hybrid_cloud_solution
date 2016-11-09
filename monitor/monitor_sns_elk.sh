@@ -76,8 +76,8 @@ while [ 1 ]; do
       let logstash_time=($(date +%s)*1000)
       echo "[{\"time\":\"$logstash_time\",\"site\":\"$logstash_site\",\"event\":\"DX link down\",\"action\":\"Change route to VPN\"}]" >> /tmp/logstash.txt
       Logfile=1
-  #    litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID1 --destination-cidr-block 0.0.0.0/0 --instance-id $VPN_ID1)
-  #    litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID2 --destination-cidr-block 0.0.0.0/0 --instance-id $VPN_ID2)
+      litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID1 --destination-cidr-block 10.10.0.0/16 --instance-id $VPN_ID1)
+      litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID2 --destination-cidr-block 10.10.0.0/16 --instance-id $VPN_ID2)
       Status=10
       DX_Status=0
     fi
@@ -111,8 +111,8 @@ while [ 1 ]; do
           echo -e `date` "\nStatus change:\nStrongswan-1: healthy\nStrongswan-2: healthy\nTunnel1: healthy\nTunnel2: healthy" | tee -a logfile
           echo "-- Private-1 route to Strongswan-1; Private-2 route to Strongswan-2" | tee -a logfile
           Logfile=1
-          litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID1 --destination-cidr-block 0.0.0.0/0 --instance-id $VPN_ID1)
-          litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID2 --destination-cidr-block 0.0.0.0/0 --instance-id $VPN_ID2)
+          litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID1 --destination-cidr-block 10.10.0.0/16 --instance-id $VPN_ID1)
+          litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID2 --destination-cidr-block 10.10.0.0/16 --instance-id $VPN_ID2)
           Status=0
           let logstash_time=($(date +%s)*1000)
           echo "[{\"time\":\"$logstash_time\",\"site\":\"$logstash_site\",\"event\":\"VPN Status Change\",\"action\":\"Strongswan-1: healthy; Strongswan-2: healthy; Tunnel1: healthy; Tunnel2: healthy; Private-1 route to Strongswan-1; Private-2 route to Strongswan-2\"}]" >> /tmp/logstash.txt
@@ -122,8 +122,8 @@ while [ 1 ]; do
           echo -e `date` "\nStatus change:\nStrongswan-1: healthy\nStrongswan-2: healthy\nTunnel1: unhealthy\nTunnel2: healthy" | tee -a logfile
           echo "-- Private-1 route to Strongswan-2; Private-2 route to Strongswan-2" | tee -a logfile
           Logfile=1
-          litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID1 --destination-cidr-block 0.0.0.0/0 --instance-id $VPN_ID2)
-          litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID2 --destination-cidr-block 0.0.0.0/0 --instance-id $VPN_ID2)
+          litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID1 --destination-cidr-block 10.10.0.0/16 --instance-id $VPN_ID2)
+          litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID2 --destination-cidr-block 10.10.0.0/16 --instance-id $VPN_ID2)
           Status=1
           let logstash_time=($(date +%s)*1000)
           echo "[{\"time\":\"$logstash_time\",\"site\":\"$logstash_site\",\"event\":\"VPN Status Change\",\"action\":\"Strongswan-1: healthy; Strongswan-2: healthy; Tunnel1: unhealthy; Tunnel2: healthy; Private-1 route to Strongswan-2; Private-2 route to Strongswan-2\"}]" >> /tmp/logstash.txt
@@ -133,8 +133,8 @@ while [ 1 ]; do
           echo -e `date` "\nStatus change:\nStrongswan-1: healthy\nStrongswan-2: healthy\nTunnel1: healthy\nTunnel2: unhealthy" | tee -a logfile
           echo "-- Private-1 route to Strongswan-1; Private-2 route to Strongswan-1" | tee -a logfile
           Logfile=1
-          litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID1 --destination-cidr-block 0.0.0.0/0 --instance-id $VPN_ID1)
-          litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID2 --destination-cidr-block 0.0.0.0/0 --instance-id $VPN_ID1)
+          litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID1 --destination-cidr-block 10.10.0.0/16 --instance-id $VPN_ID1)
+          litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID2 --destination-cidr-block 10.10.0.0/16 --instance-id $VPN_ID1)
           Status=2
           let logstash_time=($(date +%s)*1000)
           echo "[{\"time\":\"$logstash_time\",\"site\":\"$logstash_site\",\"event\":\"VPN Status Change\",\"action\":\"Strongswan-1: healthy; Strongswan-2: healthy; Tunnel1: healthy; Tunnel2: unhealthy; Private-1 route to Strongswan-1; Private-2 route to Strongswan-1\"}]" >> /tmp/logstash.txt
@@ -155,8 +155,8 @@ while [ 1 ]; do
           echo -e `date` "\nStatus change:\nStrongswan-1: unhealthy\nStrongswan-2: healthy\nTunnel1: unhealthy\nTunnel2: healthy" | tee -a logfile
           echo "-- Private-1 route to Strongswan-2; Private-2 route to Strongswan-2" | tee -a logfile
           Logfile=1
-          litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID1 --destination-cidr-block 0.0.0.0/0 --instance-id $VPN_ID2)
-          litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID2 --destination-cidr-block 0.0.0.0/0 --instance-id $VPN_ID2)
+          litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID1 --destination-cidr-block 10.10.0.0/16 --instance-id $VPN_ID2)
+          litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID2 --destination-cidr-block 10.10.0.0/16 --instance-id $VPN_ID2)
           Status=4
           Strongswan1_reboot=1
           let logstash_time=($(date +%s)*1000)
@@ -180,8 +180,8 @@ while [ 1 ]; do
           echo -e `date` "\nStatus change:\nStrongswan-1: healthy\nStrongswan-2: unhealthy\nTunnel1: healthy\nTunnel2: unhealthy" | tee -a logfile
           echo "-- Private-1 route to Strongswan-1; Private-2 route to Strongswan-1" | tee -a logfile
           Logfile=1
-          litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID1 --destination-cidr-block 0.0.0.0/0 --instance-id $VPN_ID1)
-          litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID2 --destination-cidr-block 0.0.0.0/0 --instance-id $VPN_ID1)
+          litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID1 --destination-cidr-block 10.10.0.0/16 --instance-id $VPN_ID1)
+          litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID2 --destination-cidr-block 10.10.0.0/16 --instance-id $VPN_ID1)
           Strongswan2_reboot=1
           Status=6
           let logstash_time=($(date +%s)*1000)
@@ -283,17 +283,17 @@ while [ 1 ]; do
     if [[ "$DX_Status" != "1" ]]; then
       echo `date` "-- DX link up, changing route to DX" | tee -a logfile
       Logfile=1
-      litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID1 --destination-cidr-block 0.0.0.0/0 --gateway-id $VGW_ID)
-      litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID2 --destination-cidr-block 0.0.0.0/0 --gateway-id $VGW_ID)
+      litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID1 --destination-cidr-block 10.10.0.0/16 --gateway-id $VGW_ID)
+      litterbin=$(aws ec2 replace-route --region=$EC2_REGION --route-table-id=$VPN_RT_ID2 --destination-cidr-block 10.10.0.0/16 --gateway-id $VGW_ID)
       DX_Status=1
       let logstash_time=($(date +%s)*1000)
       echo "[{\"time\":\"$logstash_time\",\"site\":\"$logstash_site\",\"event\":\"DX link up\",\"action\":\"Change route to DX\"}]" >> /tmp/logstash.txt
     fi
   fi
   if [[ "$Logfile" == "1" ]]; then
-    litterbin=$(aws sns publish --region ap-southeast-1 --topic-arn "arn:aws:sns:ap-southeast-1:938706647508:DCI-Status" --subject "Status of DCI between Singapore and Ireland Changed!" --message file://logfile)
-    litterbin=$(aws sns publish --region ap-southeast-1 --phone-number "+8613916244719" --message file://logfile)
+    litterbin=$(aws sns publish --region ap-southeast-1 --topic-arn "arn:aws:sns:ap-southeast-1:93870664XXXX:DCI-Status" --subject "Status of DCI between Singapore and Ireland Changed!" --message file://logfile)
+    litterbin=$(aws sns publish --region ap-southeast-1 --phone-number "+861860135XXXX" --message file://logfile)
     echo > logfile
     Logfile=0
-  fi
+  fi  
 done
